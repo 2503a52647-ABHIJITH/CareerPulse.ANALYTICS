@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CareerPulse | Skill Analytics Dashboard</title>
+<style>
+:root{--bg:#f1f4ff;--panel:#fff;--ink:#17233b;--muted:#75819a;--line:#e4e8f6;--blue:#4967f5;--teal:#08a99b;--purple:#9361e8;--orange:#f29b38;--pink:#ed6298;--cyan:#26a9d8;--shadow:0 10px 30px rgba(48,55,120,.09)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial}
+.app{display:grid;grid-template-columns:246px 1fr;min-height:100vh}.side{background:linear-gradient(165deg,#20285e 0%,#3b3180 48%,#155d79 100%);color:#dbe5f8;padding:26px 18px;display:flex;flex-direction:column;gap:28px}.brand{display:flex;align-items:center;gap:11px;font-size:19px;font-weight:800;color:#fff}.logo{height:38px;width:38px;border-radius:12px;background:linear-gradient(135deg,#ff7ab6,#8b6cff 55%,#28c6cf);display:grid;place-items:center;font-weight:900}.subbrand{color:#9eacc7;font-size:11px;margin:3px 0 0 49px;letter-spacing:1.4px;text-transform:uppercase}.navlabel{font-size:10px;color:#8292b1;letter-spacing:1.5px;margin:0 10px 8px}.nav a{display:flex;gap:12px;padding:11px 12px;margin:4px 0;border-radius:9px;color:#b8c5dc;text-decoration:none;font-weight:600}.nav a.active,.nav a:hover{background:linear-gradient(100deg,rgba(117,137,255,.38),rgba(33,205,197,.18));color:#fff;box-shadow:inset 3px 0 #70e4dc}.nav .ico{width:18px;text-align:center}.sidefoot{margin-top:auto;border-top:1px solid #33415d;padding:16px 8px;color:#9eacc7;font-size:12px}
+main{padding:28px 32px;max-width:1600px;width:100%;margin:auto;background:radial-gradient(ellipse at 95% 0%,rgba(168,139,250,.13),transparent 30%),radial-gradient(ellipse at 0% 35%,rgba(64,190,220,.10),transparent 28%)}.top{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:22px}.eyebrow{color:var(--blue);font-weight:800;font-size:11px;letter-spacing:1.5px;text-transform:uppercase}.top h1{margin:5px 0 4px;font-size:27px;letter-spacing:-.7px}.muted{color:var(--muted)}.actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.btn{border:1px solid var(--line);background:#fff;color:#34415b;border-radius:9px;padding:10px 13px;font-weight:700;cursor:pointer}.btn.primary{background:linear-gradient(105deg,#4967f5,#925fe6 60%,#d45cae);color:white;border-color:transparent;box-shadow:0 5px 14px rgba(105,91,220,.25)}.btn:hover{filter:brightness(.97)}.filters{display:flex;gap:10px;flex-wrap:wrap;background:linear-gradient(110deg,#fff,#f5f4ff 55%,#effbfc);border:1px solid #e1e4fa;padding:12px;border-radius:13px;margin-bottom:17px;box-shadow:var(--shadow)}select,.search{border:1px solid var(--line);border-radius:8px;padding:9px 12px;color:#40506c;background:#fff;min-width:145px;outline:none}.search{min-width:210px;flex:1}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}.card{background:linear-gradient(145deg,#fff 0%,#fcfcff 100%);border:1px solid var(--line);border-radius:14px;padding:17px;box-shadow:var(--shadow);min-width:0;transition:transform .2s ease,box-shadow .2s ease}.card:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(48,55,120,.13)}.kpihead{display:flex;justify-content:space-between;color:var(--muted);font-weight:650;font-size:12px}.kpi{position:relative;overflow:hidden}.kpi:before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,#4967f5,#b15de0)}.kpi:nth-child(2):before{background:linear-gradient(180deg,#08a99b,#54d6c2)}.kpi:nth-child(3):before{background:linear-gradient(180deg,#9361e8,#d66ac0)}.kpi:nth-child(4):before{background:linear-gradient(180deg,#f29b38,#f36e86)}.kpiicon{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font-size:16px}.kpi strong{display:block;font-size:27px;margin:12px 0 3px;letter-spacing:-.6px;background:linear-gradient(90deg,#334fe0,#a04de0);-webkit-background-clip:text;background-clip:text;color:transparent}.trend{font-size:11px;color:#15977c;font-weight:700}.grid2{display:grid;grid-template-columns:1.25fr 1fr;gap:15px;margin-bottom:15px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px;margin-bottom:15px}.cardtitle{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:15px}.cardtitle h3{font-size:14px;margin:0 0 3px}.cardtitle p{margin:0;color:var(--muted);font-size:11px}.tag{font-size:10px;padding:5px 8px;border-radius:20px;background:linear-gradient(100deg,#e9edff,#f4eaff);color:#6551c9;font-weight:800}.chart{height:230px;position:relative}.chart svg{width:100%;height:100%;overflow:visible}.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:9px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}.bars{display:flex;flex-direction:column;gap:13px}.barrow{display:grid;grid-template-columns:110px 1fr 44px;align-items:center;gap:9px;font-size:11px}.bartrack{height:9px;border-radius:9px;background:#edf1f7;overflow:hidden}.barfill{height:100%;border-radius:9px;background:linear-gradient(90deg,#4967f5,#8a65e8,#e36db0)}.barvalue{text-align:right;color:#5f6d86;font-weight:700}.donutwrap{display:flex;align-items:center;justify-content:center;gap:24px;min-height:180px}.donut{width:150px;height:150px;border-radius:50%;background:conic-gradient(#356ae6 0 42%,#18aaa4 42% 69%,#8065d8 69% 86%,#f0a34d 86% 100%);position:relative}.donut:after{content:"";position:absolute;inset:27px;background:#fff;border-radius:50%}.donutcenter{position:absolute;inset:0;display:grid;place-content:center;text-align:center;z-index:1;font-weight:800;font-size:20px}.donutcenter small{font-size:10px;color:var(--muted);font-weight:600}.donutlegend{display:flex;flex-direction:column;gap:10px;font-size:11px;color:#53617b}.donutlegend b{float:right;margin-left:15px;color:#25334e}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;white-space:nowrap;font-size:11px}th{text-align:left;color:#8490a5;font-weight:700;padding:10px;border-bottom:1px solid var(--line)}td{padding:12px 10px;border-bottom:1px solid #f0f3f8;color:#42516c}tr:last-child td{border-bottom:0}.role{font-weight:750;color:#263651}.pill{padding:4px 7px;border-radius:20px;background:#eaf8f4;color:#14836d;font-size:10px;font-weight:800}.insight{display:flex;gap:11px;padding:12px;border:1px solid var(--line);border-radius:10px;margin:8px 0}.insighticon{height:30px;width:30px;flex:none;border-radius:9px;background:linear-gradient(135deg,#e8edff,#f6eaff);color:#7459d8;display:grid;place-items:center}.insight b{display:block;font-size:12px;margin-bottom:3px}.insight p{margin:0;color:var(--muted);font-size:11px}.footer{color:#929db0;font-size:10px;text-align:center;padding:18px}.uploadhint{font-size:11px;color:var(--muted);margin:0 0 12px}.file{display:none}
+@media(max-width:1050px){.app{grid-template-columns:1fr}.side{display:none}main{padding:22px 18px}.kpis{grid-template-columns:repeat(2,1fr)}.grid3{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.top{display:block}.actions{margin-top:14px}.grid2,.grid3{grid-template-columns:1fr}.kpis{gap:9px}.card{padding:14px}.kpi strong{font-size:23px}.filters>*{flex:1;min-width:130px}.barrow{grid-template-columns:90px 1fr 35px}}
+
+.side{position:sticky;top:0;height:100vh;align-self:start}
+.tools{display:flex;gap:7px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
+.seg button{border:0;background:transparent;padding:5px 9px;font:inherit;font-size:10px;font-weight:700;color:#6b7893;cursor:pointer;transition:background .15s,color .15s}
+.seg button:hover:not(.on){background:#f1f3ff;color:#4967f5}
+.seg button.on{background:linear-gradient(105deg,#4967f5,#925fe6);color:#fff}
+.barrow.click{cursor:pointer;border-radius:8px;padding:3px 5px;margin:-3px -5px;transition:background .15s}
+.barrow.click:hover{background:#f4f5ff}
+.barrow.sel{background:#eef1ff;box-shadow:inset 0 0 0 1px #cdd5ff}
+.barrow.dim{opacity:.45}
+.bars.wide .barrow{grid-template-columns:130px 1fr 72px}
+.chip{display:none;align-items:center;gap:6px;border:1px solid #cdd5ff;background:#eef1ff;color:#4254c9;border-radius:20px;padding:8px 12px;font:inherit;font-size:12px;font-weight:700;cursor:pointer}
+.chip:hover{background:#e3e8ff}
+.fbtn{padding:9px 12px;font-size:13px}
+th.sort{cursor:pointer;user-select:none;transition:color .15s}th.sort:hover{color:#4967f5}
+th.sort .arr{display:inline-block;width:10px;margin-left:3px;color:#4967f5}
+#roleTable tr{cursor:pointer}#roleTable tr:hover td{background:#f7f8ff}
+.donutlegend div{cursor:pointer;padding:3px 6px;border-radius:7px;transition:background .15s,opacity .15s}
+.donutlegend div:hover{background:#f4f5ff}.donutlegend div.sel{background:#eef1ff;box-shadow:inset 0 0 0 1px #cdd5ff}.donutlegend div.dim{opacity:.45}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:#20285e;color:#fff;padding:10px 16px;border-radius:10px;font-size:12px;font-weight:600;box-shadow:0 10px 30px rgba(32,40,94,.35);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:50}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.btn:active,.seg button:active,.chip:active{transform:scale(.97)}
+@media(max-width:1050px){.side{position:static;height:auto}}
+
+.page{display:none}.page.on{display:block;animation:pgfade .28s ease}
+@keyframes pgfade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.mobtabs{display:none;gap:6px;margin-bottom:14px;background:#fff;border:1px solid var(--line);border-radius:11px;padding:4px}
+.mobtabs button{flex:1;border:0;background:transparent;padding:9px;border-radius:8px;font:inherit;font-weight:700;color:#6b7893;cursor:pointer}
+.mobtabs button.on{background:linear-gradient(105deg,#4967f5,#925fe6);color:#fff}
+@media(max-width:1050px){.mobtabs{display:flex}}
+.tablewrap.scroll{max-height:440px;overflow:auto}.tablewrap.scroll th{position:sticky;top:0;background:#fff;z-index:1}
+#skTable tr{cursor:pointer}#skTable tr:hover td{background:#f7f8ff}#skTable tr.sel td{background:#eef1ff}
+.smallsearch{min-width:0!important;flex:none!important;width:150px;padding:6px 10px!important;font-size:11px}
+.minibar{display:inline-block;vertical-align:middle;width:78px;height:7px;border-radius:7px;background:#edf1f7;overflow:hidden;margin-right:7px}
+.minibar i{display:block;height:100%;border-radius:7px;background:linear-gradient(90deg,#4967f5,#8a65e8,#e36db0)}
+.skhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.skhead h2{margin:0;font-size:22px;letter-spacing:-.5px;background:linear-gradient(90deg,#334fe0,#a04de0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:16px}
+.stat{border:1px solid var(--line);border-radius:10px;padding:10px;background:#fafbff}.stat b{display:block;font-size:16px}.stat span{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:.6px}
+.subh{font-size:11px;font-weight:800;color:#8490a5;letter-spacing:1px;margin:16px 0 8px}
+.pchips{display:flex;flex-wrap:wrap;gap:7px}
+.pchip{border:1px solid #d9def7;background:#fff;color:#4254c9;border-radius:20px;padding:5px 10px;font:inherit;font-size:11px;font-weight:700;cursor:pointer;transition:background .15s}
+.pchip:hover{background:#eef1ff}
+.hist{display:flex;gap:7px;height:230px;align-items:stretch}
+.hcol{flex:1;display:flex;flex-direction:column;align-items:center;min-width:0}
+.hplot{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center;min-height:0}
+.hstack{width:100%;max-width:44px;display:flex;flex-direction:column-reverse;border-radius:7px 7px 0 0;overflow:hidden;transition:height .35s ease}
+.hstack div{width:100%;min-height:2px}
+.hn{font-size:11px;font-weight:800;color:#42516c;margin-top:5px}.hl{font-size:9px;color:#8a96aa;white-space:nowrap}
+.hcol:hover .hstack{filter:brightness(1.08)}
+
+.actions{position:relative}.more{position:relative}
+.morebtn{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;width:40px;padding:0;height:41px}
+.morebtn span{width:4px;height:4px;border-radius:50%;background:#34415b}
+.morebtn[aria-expanded="true"]{background:#eef1ff;border-color:#cdd5ff}
+.menu{display:none;position:absolute;right:0;top:calc(100% + 8px);min-width:190px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 14px 34px rgba(48,55,120,.18);padding:6px;z-index:40}
+.menu.open{display:block;animation:pgfade .15s ease}
+.mitem{display:flex;align-items:center;gap:10px;width:100%;border:0;background:transparent;text-align:left;padding:10px 12px;border-radius:8px;font:inherit;font-weight:700;color:#34415b;cursor:pointer}
+.mitem:hover{background:#f1f3ff;color:#4254c9}
+.mitem i{font-style:normal;width:16px;text-align:center;color:#7459d8}
+.top{display:block}.titlerow{display:flex;align-items:center;justify-content:space-between;gap:16px}.titlerow h1{margin:5px 0 4px}.titlerow .actions{margin-top:0;flex-wrap:nowrap;flex:none}
+.app{grid-template-columns:1fr}.mobtabs{display:flex;max-width:440px}@media(max-width:700px){.mobtabs{max-width:none}}
+
+.mobtabs{max-width:540px}
+.iseg{display:inline-flex}
+.aibar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.pillkey{font-size:10px;font-weight:800;padding:5px 9px;border-radius:20px;cursor:pointer;border:0;background:#fff4e8;color:#c27a1c}
+.pillkey.ok{background:#eaf8f4;color:#14836d}
+.aihead{font-size:15px;font-weight:800;line-height:1.35;margin-bottom:12px;background:linear-gradient(90deg,#334fe0,#a04de0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.insgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+@media(max-width:700px){.insgrid{grid-template-columns:1fr}}
+.steps{margin:6px 0 0;padding-left:20px;color:#42516c;font-size:12px}.steps li{margin:6px 0}
+.aiempty{border:1px dashed #cdd5ff;border-radius:12px;padding:22px;text-align:center;color:var(--muted);background:#fafbff}
+.aiempty b{display:block;color:var(--ink);font-size:14px;margin-bottom:4px}
+.stale{display:none;font-size:11px;color:#c27a1c;font-weight:700;margin:0 0 10px}
+.spin{display:inline-block;width:13px;height:13px;border:2px solid #cdd5ff;border-top-color:#4967f5;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px;margin-right:7px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.chatlog{height:290px;overflow:auto;display:flex;flex-direction:column;gap:9px;padding:4px 2px 8px}
+.msg{max-width:92%;padding:9px 12px;border-radius:12px;font-size:12px;line-height:1.5}
+.msg.user{align-self:flex-end;background:linear-gradient(105deg,#4967f5,#925fe6);color:#fff;border-bottom-right-radius:4px}
+.msg.ai{align-self:flex-start;background:#f4f5ff;border:1px solid #e1e4fa;color:#2c3a55;border-bottom-left-radius:4px}
+.chatrow{display:flex;gap:8px;margin-top:8px}.chatrow input{flex:1;min-width:0}
+.qchips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 0}
+.setgrid{display:grid;grid-template-columns:2fr 1.2fr;gap:10px}
+@media(max-width:700px){.setgrid{grid-template-columns:1fr}}
+.setgrid label{display:block;font-size:11px;font-weight:700;color:#6b7893;margin-bottom:4px}
+.setgrid input[type=password],.setgrid input[type=text]{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 12px;outline:none;font:inherit;color:#40506c}
+.note{font-size:11px;color:var(--muted);margin:10px 0 0}
+body[data-page="insights"] #search{display:none}
+body[data-page="insights"] .filters select{flex:1}
+</style></head>
+<body><div class="app">
+<main id="overview">
+ <header class="top"><div><div class="eyebrow" id="pgEyebrow">JOB MARKET INTELLIGENCE</div><div class="titlerow"><h1 id="pgTitle">CareerPulse Dashboard</h1><div class="actions"><button class="btn" onclick="resetData()" title="Restore the demo dataset and clear filters">↺ Reset</button><div class="more"><button class="btn morebtn" id="moreBtn" aria-label="More options" aria-haspopup="true" aria-expanded="false" title="More options"><span></span><span></span><span></span></button><div class="menu" id="moreMenu" role="menu"><button class="mitem" id="exportBtn" role="menuitem" title="Download the currently filtered listings as CSV"><i>⤓</i>Export CSV</button><label class="mitem" for="csvFile" role="menuitem"><i>＋</i>Upload dataset</label><input class="file" id="csvFile" type="file" accept=".csv"></div></div></div></div><div class="muted" id="pgSub">Explore skills, salaries and opportunities across the job market.</div></div></header>
+ <div class="mobtabs" id="mobTabs"><button data-go="overview" class="on">Overview</button><button data-go="skills">Skills</button><button data-go="salary">Salary</button><button data-go="insights">Insights</button></div>
+ <div class="filters"><select id="roleFilter"><option value="All">All job roles</option></select><select id="cityFilter"><option value="All">All cities</option></select><select id="expFilter"><option value="All">All experience levels</option><option>Fresher</option><option>1-3 years</option><option>4-6 years</option><option>7+ years</option></select><input class="search" id="search" placeholder="Search role, city or skill..."><button class="chip" id="skillChip" title="Remove skill filter"></button><button class="btn fbtn" id="clearBtn" title="Clear all filters">✕ Clear filters</button></div>
+ <div class="page on" id="pg-overview"><section class="kpis">
+  <div class="card kpi"><div class="kpihead">JOB LISTINGS <span class="kpiicon" style="background:#edf3ff;color:#356ae6">▤</span></div><strong id="kJobs">1,248</strong><div class="trend">● Dataset overview</div></div>
+  <div class="card kpi"><div class="kpihead">AVERAGE SALARY <span class="kpiicon" style="background:#e9f8f5;color:#16a6a1">₹</span></div><strong id="kSalary">₹8.4 LPA</strong><div class="muted" style="font-size:11px">Across selected listings</div></div>
+  <div class="card kpi"><div class="kpihead">IN-DEMAND SKILLS <span class="kpiicon" style="background:#f2efff;color:#8065d8">✦</span></div><strong id="kSkills">18</strong><div class="muted" style="font-size:11px">Unique skills in demo data</div></div>
+  <div class="card kpi"><div class="kpihead">FRESHER ROLES <span class="kpiicon" style="background:#fff4e8;color:#ed9b42">♧</span></div><strong id="kFresh">32%</strong><div class="muted" style="font-size:11px">Share of entry-level listings</div></div>
+ </section>
+ <section class="grid2">
+  <div class="card" id="skills"><div class="cardtitle"><div><h3>Most demanded skills</h3><p>Frequency of skills · click a bar to filter</p></div><div class="tools"><div class="seg" data-seg="top"><button data-v="5">Top 5</button><button data-v="7">Top 7</button><button data-v="10">Top 10</button></div><span class="tag">TOP SKILLS</span></div></div><div id="skillBars" class="bars"></div></div>
+  <div class="card" id="salary"><div class="cardtitle"><div><h3>Average salary by job role</h3><p>Estimated annual salary · LPA</p></div><div class="tools"><div class="seg" data-seg="view"><button data-v="line">Line</button><button data-v="bar">Bars</button></div><div class="seg" data-seg="dir"><button data-v="desc">High → Low</button><button data-v="asc">Low → High</button></div><span class="tag">SALARY</span></div></div><div class="chart" id="salaryChart"></div></div>
+ </section>
+ <section class="grid3">
+  <div class="card"><div class="cardtitle"><div><h3>Opportunities by city</h3><p>Listings in selected dataset</p></div><div class="seg" data-seg="city"><button data-v="3">Top 3</button><button data-v="99">All</button></div></div><div class="chart" id="cityChart"></div></div>
+  <div class="card" id="freshers"><div class="cardtitle"><div><h3>Experience distribution</h3><p>Required experience levels · click to filter</p></div></div><div class="donutwrap"><div class="donut" id="expDonut"><div class="donutcenter" id="expCenter">1,248<small>LISTINGS</small></div></div><div class="donutlegend" id="expLegend"></div></div></div>
+  <div class="card"><div class="cardtitle"><div><h3>Career insights</h3><p>Quick observations from current view</p></div></div><div id="insights"></div></div>
+ </section>
+ <section class="card" id="roles"><div class="cardtitle"><div><h3>Job role comparison</h3><p>Demand, average salary and entry-level availability · click a header to sort, a row to filter</p></div><span class="tag">ROLE ANALYSIS</span></div><div class="tablewrap"><table><thead><tr><th class="sort" data-k="role">JOB ROLE<span class="arr"></span></th><th class="sort" data-k="n">LISTINGS<span class="arr"></span></th><th class="sort" data-k="sal">AVG. SALARY<span class="arr"></span></th><th class="sort" data-k="fr">FRESHER SHARE<span class="arr"></span></th><th class="sort" data-k="skill">TOP SKILL<span class="arr"></span></th><th class="sort" data-k="n">OUTLOOK<span class="arr"></span></th></tr></thead><tbody id="roleTable"></tbody></table></div></section>
+</div>
+ <div class="page" id="pg-skills">
+  <section class="kpis">
+   <div class="card kpi"><div class="kpihead">UNIQUE SKILLS <span class="kpiicon" style="background:#f2efff;color:#8065d8">✦</span></div><strong id="sk1">0</strong><div class="muted" style="font-size:11px">In the filtered listings</div></div>
+   <div class="card kpi"><div class="kpihead">MOST IN-DEMAND <span class="kpiicon" style="background:#e9f8f5;color:#16a6a1">▲</span></div><strong id="sk2" style="font-size:21px;margin-top:15px">—</strong><div class="muted" id="sk2s" style="font-size:11px"></div></div>
+   <div class="card kpi"><div class="kpihead">HIGHEST-PAYING SKILL <span class="kpiicon" style="background:#f2efff;color:#8065d8">₹</span></div><strong id="sk3" style="font-size:21px;margin-top:15px">—</strong><div class="muted" id="sk3s" style="font-size:11px"></div></div>
+   <div class="card kpi"><div class="kpihead">SKILLS PER LISTING <span class="kpiicon" style="background:#fff4e8;color:#ed9b42">▤</span></div><strong id="sk4">0</strong><div class="muted" style="font-size:11px">Average skills required</div></div>
+  </section>
+  <section class="grid2">
+   <div class="card"><div class="cardtitle"><div><h3>Skill ranking</h3><p>Click a skill to see its profile</p></div><div class="tools"><input class="search smallsearch" id="skSearch" placeholder="Search skills..."><div class="seg pseg" data-seg="sk-sort"><button data-v="demand">By demand</button><button data-v="salary">By salary</button></div><div class="seg pseg" data-seg="sk-n"><button data-v="10">Top 10</button><button data-v="99">All</button></div></div></div>
+    <div class="tablewrap scroll"><table><thead><tr><th>#</th><th>SKILL</th><th>LISTINGS</th><th>SHARE</th><th>AVG. SALARY</th><th>TOP ROLE</th></tr></thead><tbody id="skTable"></tbody></table></div></div>
+   <div class="card" id="skDetail"></div>
+  </section>
+ </div>
+ <div class="page" id="pg-salary">
+  <section class="kpis">
+   <div class="card kpi"><div class="kpihead">AVERAGE SALARY <span class="kpiicon" style="background:#edf3ff;color:#356ae6">₹</span></div><strong id="sa1">—</strong><div class="muted" style="font-size:11px">Mean of filtered listings</div></div>
+   <div class="card kpi"><div class="kpihead">MEDIAN SALARY <span class="kpiicon" style="background:#e9f8f5;color:#16a6a1">◐</span></div><strong id="sa2">—</strong><div class="muted" style="font-size:11px">Half of listings pay more</div></div>
+   <div class="card kpi"><div class="kpihead">HIGHEST OFFER <span class="kpiicon" style="background:#f2efff;color:#8065d8">▲</span></div><strong id="sa3">—</strong><div class="muted" id="sa3s" style="font-size:11px"></div></div>
+   <div class="card kpi"><div class="kpihead">LOWEST OFFER <span class="kpiicon" style="background:#fff4e8;color:#ed9b42">▼</span></div><strong id="sa4">—</strong><div class="muted" id="sa4s" style="font-size:11px"></div></div>
+  </section>
+  <section class="grid2">
+   <div class="card"><div class="cardtitle"><div><h3>Salary distribution</h3><p>Listings per 2 LPA band</p></div><div class="seg pseg" data-seg="s-view"><button data-v="total">Total</button><button data-v="exp">By experience</button></div></div><div id="salHist"></div><div class="legend" id="salLegend"></div></div>
+   <div class="card"><div class="cardtitle"><div><h3>Compare pay</h3><p id="salCmpSub">Estimated annual salary · LPA</p></div><div class="tools"><div class="seg pseg" data-seg="s-by"><button data-v="role">Role</button><button data-v="city">City</button><button data-v="exp">Experience</button></div><div class="seg pseg" data-seg="s-metric"><button data-v="avg">Average</button><button data-v="med">Median</button></div></div></div><div id="salBars" class="bars wide" style="max-height:270px;overflow:auto;padding:4px 6px 4px 0"></div></div>
+  </section>
+  <section class="card"><div class="cardtitle"><div><h3>Top paying listings</h3><p>Highest salaries in the current view</p></div><div class="seg pseg" data-seg="s-n"><button data-v="5">Top 5</button><button data-v="10">Top 10</button></div></div><div class="tablewrap"><table><thead><tr><th>JOB ROLE</th><th>CITY</th><th>EXPERIENCE</th><th>SALARY</th><th>KEY SKILLS</th></tr></thead><tbody id="salTable"></tbody></table></div></section>
+ </div>
+<div class="page" id="pg-insights">
+  <section class="grid2">
+   <div class="card"><div class="cardtitle"><div><h3>AI career insights</h3><p id="insMeta">Generated by Claude from the data currently in view</p></div><button class="pillkey" id="keyPill" title="Open API key settings">API key needed</button></div>
+    <div class="aibar"><div class="seg iseg" data-seg="i-aud"><button data-v="fresher">Student / Fresher</button><button data-v="switcher">Job switcher</button><button data-v="recruiter">Recruiter</button></div><button class="btn primary" id="insGo">✦ Generate insights</button><button class="btn" id="insCopy" title="Copy insights as text">⧉ Copy</button></div>
+    <div class="stale" id="insStale">Filters changed since these insights were generated — click Generate to refresh.</div>
+    <div id="insOut"><div class="aiempty"><b>No insights yet</b>Pick who the insights are for, then click “Generate insights”. Claude reads a summary of the listings in view and writes the takeaways.</div></div></div>
+   <div class="card"><div class="cardtitle"><div><h3>Ask the data</h3><p>Questions are answered from the listings in view</p></div><button class="btn fbtn" id="chatClear" style="padding:5px 9px;font-size:11px">Clear</button></div>
+    <div class="chatlog" id="chatLog"><div class="msg ai">Hi! Ask me anything about the skills, salaries and cities in the current view.</div></div>
+    <div class="qchips"><button class="pchip" data-q="Which skills should a fresher learn first, and why?">Skills for freshers</button><button class="pchip" data-q="Which city pays best for 1-3 years of experience?">Best-paying city</button><button class="pchip" data-q="Compare Data Analyst and Data Scientist roles.">Analyst vs Scientist</button></div>
+    <div class="chatrow"><input class="search" id="chatIn" placeholder="Ask a question about this data..."><button class="btn primary" id="chatSend">Send</button></div></div>
+  </section>
+  <section class="card" id="aiSettings"><div class="cardtitle"><div><h3>AI settings</h3><p>Uses your own Anthropic API key · calls go straight from your browser to Anthropic</p></div><span class="tag">SETTINGS</span></div>
+   <div class="setgrid"><div><label for="aiKey">API key</label><input type="password" id="aiKey" placeholder="sk-ant-..." autocomplete="off"></div><div><label for="aiModel">Model</label><input type="text" id="aiModel" value="claude-sonnet-5-5" autocomplete="off"></div></div>
+   <div class="aibar" style="margin:12px 0 0"><label style="font-size:12px;color:#42516c;display:flex;gap:6px;align-items:center"><input type="checkbox" id="aiRemember"> Remember on this device</label><button class="btn" id="keySave">Save key</button><button class="btn" id="keyClear">Remove key</button><span class="muted" id="keyStatus" style="font-size:11px"></span></div>
+   <p class="note">Your key stays in this browser and is only sent to Anthropic. Don’t share this file or screenshot it with “Remember” turned on. Insights use a summary of the listings in view, so a dataset you upload is also sent to Anthropic when you use these features.</p></section>
+ </div>
+ <p class="footer">CareerPulse – Skill Analytics Dashboard · Batch 22 · Demo figures are illustrative and not live job-market statistics.</p>
+</main></div><div class="toast" id="toast"></div>
+<script>
+const demo=[
+["Data Analyst","Hyderabad",7.2,"Fresher","SQL,Python,Excel,Power BI"],["Data Analyst","Bengaluru",8.5,"1-3 years","SQL,Python,Power BI,Tableau"],["Data Analyst","Pune",6.8,"Fresher","Excel,SQL,Python"],["Data Scientist","Bengaluru",13.5,"4-6 years","Python,Machine Learning,SQL"],["Data Scientist","Hyderabad",12.2,"1-3 years","Python,Machine Learning,Statistics"],["Data Scientist","Chennai",11.8,"4-6 years","Python,TensorFlow,Machine Learning"],["Software Developer","Bengaluru",10.5,"1-3 years","Java,Python,SQL,Git"],["Software Developer","Hyderabad",9.2,"Fresher","Java,React,JavaScript,Git"],["Software Developer","Pune",8.8,"1-3 years","Java,React,SQL"],["Web Developer","Hyderabad",6.5,"Fresher","HTML,CSS,JavaScript,React"],["Web Developer","Chennai",7.4,"1-3 years","HTML,CSS,JavaScript,React"],["AI Engineer","Bengaluru",15.2,"4-6 years","Python,Machine Learning,TensorFlow"],["AI Engineer","Hyderabad",14.4,"1-3 years","Python,TensorFlow,SQL"],["Cloud Engineer","Pune",11.2,"4-6 years","AWS,Linux,Docker,Python"],["Cloud Engineer","Bengaluru",12.8,"7+ years","AWS,Docker,Linux,SQL"],["Business Analyst","Mumbai",8.1,"Fresher","Excel,SQL,Power BI"],["Business Analyst","Pune",9.4,"1-3 years","Excel,SQL,Tableau"],["Cybersecurity Analyst","Hyderabad",9.8,"1-3 years","Linux,Python,Networking"],["Cybersecurity Analyst","Bengaluru",12.1,"4-6 years","Linux,Networking,AWS"],["UI/UX Designer","Mumbai",7.6,"Fresher","Figma,UI Design,UX Research"],["UI/UX Designer","Pune",8.3,"1-3 years","Figma,UI Design,HTML"],["DevOps Engineer","Bengaluru",13.2,"4-6 years","Docker,AWS,Linux,Git"],["DevOps Engineer","Hyderabad",11.6,"1-3 years","Docker,AWS,Python"],["ML Engineer","Bengaluru",16.5,"4-6 years","Python,Machine Learning,TensorFlow"],["ML Engineer","Hyderabad",14.8,"1-3 years","Python,Machine Learning,SQL"],["Data Analyst","Mumbai",7.8,"1-3 years","SQL,Excel,Power BI"],["Software Developer","Chennai",9.6,"Fresher","Java,JavaScript,Git"],["Web Developer","Pune",6.9,"Fresher","HTML,CSS,React"],["Cloud Engineer","Hyderabad",10.7,"1-3 years","AWS,Linux,Docker"],["Business Analyst","Bengaluru",10.1,"4-6 years","SQL,Excel,Tableau"],["AI Engineer","Pune",13.7,"Fresher","Python,Machine Learning"],["Cybersecurity Analyst","Chennai",8.9,"Fresher","Linux,Networking,Python"]
+].map((r,i)=>({role:r[0],city:r[1],salary:r[2],exp:r[3],skills:r[4].split(",")}));
+let skillSel=null,topN=7,cityN=99,salView="line",salDir="desc",tbl={k:"n",d:-1};
+let rows=[...demo]; const $=id=>document.getElementById(id);
+const money=n=>"₹"+n.toFixed(1)+" LPA";
+function filtered(){let role=$("roleFilter").value,city=$("cityFilter").value,exp=$("expFilter").value,q=$("search").value.toLowerCase();return rows.filter(r=>(role==="All"||r.role===role)&&(city==="All"||r.city===city)&&(exp==="All"||r.exp===exp)&&(!skillSel||r.skills.includes(skillSel))&&(!q||(r.role+" "+r.city+" "+r.skills.join(" ")).toLowerCase().includes(q)))}
+function options(){skillSel=null;let roles=[...new Set(rows.map(x=>x.role))].sort(),cities=[...new Set(rows.map(x=>x.city))].sort();$("roleFilter").innerHTML='<option value="All">All job roles</option>'+roles.map(x=>`<option>${x}</option>`).join("");$("cityFilter").innerHTML='<option value="All">All cities</option>'+cities.map(x=>`<option>${x}</option>`).join("")}
+function svgBars(el,data,color="#356ae6",click=false,sel=null,fmt=v=>v){let max=Math.max(...data.map(x=>x[1]),1);$(el).innerHTML=data.map(([name,val])=>`<div class="barrow${click?" click":""}${sel===name?" sel":""}${sel&&sel!==name?" dim":""}" ${click?`data-name="${name}" title="Click to filter by ${name}"`:""}><span>${name}</span><div class="bartrack"><div class="barfill" style="width:${val/max*100}%;background:${color}"></div></div><span class="barvalue">${fmt(val)}</span></div>`).join("")}
+function drawLineChart(el,data){let max=Math.max(...data.map(x=>x[1]),1),w=420,h=220,left=35,right=12,top=12,bottom=30,iw=w-left-right,ih=h-top-bottom;let pts=data.map((d,i)=>[left+i*(iw/Math.max(data.length-1,1)),top+ih-(d[1]/max)*ih]);let path=pts.map((p,i)=>(i?"L":"M")+p.join(",")).join(" ");$(el).innerHTML=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Average salary chart"><defs><linearGradient id="area" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#356ae6" stop-opacity=".22"/><stop offset="1" stop-color="#356ae6" stop-opacity="0"/></linearGradient></defs>${[0,.25,.5,.75,1].map(v=>`<line x1="${left}" y1="${top+ih*v}" x2="${w-right}" y2="${top+ih*v}" stroke="#edf1f7"/><text x="${left-8}" y="${top+ih*v+4}" text-anchor="end" fill="#8a96aa" font-size="10">${(max*(1-v)).toFixed(0)}</text>`).join("")}<path d="${path} L${pts[pts.length-1][0]},${top+ih} L${pts[0][0]},${top+ih} Z" fill="url(#area)"/><path d="${path}" fill="none" stroke="#356ae6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>${pts.map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="#fff" stroke="#356ae6" stroke-width="2"><title>${data[i][0]}: ${money(data[i][1])}</title></circle><text x="${p[0]}" y="${h-8}" text-anchor="middle" fill="#78859b" font-size="9">${data[i][0].split(" ")[0]}</text>`).join("")}</svg>`}
+function render(){let d=filtered(),n=d.length,avg=n?d.reduce((a,b)=>a+b.salary,0)/n:0,fresh=n?d.filter(x=>x.exp==="Fresher").length/n*100:0,skills=[...new Set(d.flatMap(x=>x.skills))];$("kJobs").textContent=n.toLocaleString();$("kSalary").textContent=money(avg);$("kSkills").textContent=skills.length;$("kFresh").textContent=Math.round(fresh)+"%";
+let sc={};d.forEach(x=>x.skills.forEach(s=>sc[s]=(sc[s]||0)+1));let skillData=Object.entries(sc).sort((a,b)=>b[1]-a[1]).slice(0,topN);if(skillSel&&!skillData.some(s=>s[0]===skillSel)&&sc[skillSel])skillData.push([skillSel,sc[skillSel]]);svgBars("skillBars",skillData,"#356ae6",true,skillSel);
+let byRole={};d.forEach(x=>(byRole[x.role]??=[]).push(x.salary));let salaryData=Object.entries(byRole).map(([k,v])=>[k,v.reduce((a,b)=>a+b,0)/v.length]).sort((a,b)=>salDir==="asc"?a[1]-b[1]:b[1]-a[1]).slice(0,6);drawSalary(salaryData);
+let byCity={};d.forEach(x=>byCity[x.city]=(byCity[x.city]||0)+1);svgBars("cityChart",Object.entries(byCity).sort((a,b)=>b[1]-a[1]).slice(0,cityN),"#18aaa4");
+let exps=["Fresher","1-3 years","4-6 years","7+ years"],cols=["#356ae6","#18aaa4","#8065d8","#f0a34d"],counts=exps.map(e=>d.filter(x=>x.exp===e).length),total=counts.reduce((a,b)=>a+b,0),cur=0,stops=counts.map((v,i)=>{let start=cur;cur+=total?v/total*100:0;return `${cols[i]} ${start}% ${cur}%`});$("expDonut").style.background=total?`conic-gradient(${stops.join(",")})`:"#e8edf5";$("expCenter").innerHTML=n.toLocaleString()+"<small>LISTINGS</small>";$("expLegend").innerHTML=exps.map((e,i)=>`<div data-exp="${e}" title="Click to filter by ${e}"><span class="dot" style="background:${cols[i]}"></span>${e}<b>${counts[i]}</b></div>`).join("");
+let roles=Object.entries(byRole).map(([role,sals])=>{let subset=d.filter(x=>x.role===role),fr=subset.filter(x=>x.exp==="Fresher").length/subset.length*100,sk={};subset.forEach(x=>x.skills.forEach(s=>sk[s]=(sk[s]||0)+1));return {role,n:subset.length,sal:sals.reduce((a,b)=>a+b,0)/sals.length,fr,skill:Object.entries(sk).sort((a,b)=>b[1]-a[1])[0]?.[0]||"—"}}).sort((a,b)=>["role","skill"].includes(tbl.k)?tbl.d*String(a[tbl.k]).localeCompare(String(b[tbl.k])):tbl.d*(a[tbl.k]-b[tbl.k]));
+$("roleTable").innerHTML=roles.map(x=>`<tr data-role="${x.role}" title="Click to filter by ${x.role}"><td class="role">${x.role}</td><td>${x.n}</td><td>${money(x.sal)}</td><td>${Math.round(x.fr)}%</td><td>${x.skill}</td><td><span class="pill">${x.n>=3?"High demand":"Emerging"}</span></td></tr>`).join("")||'<tr><td colspan="6">No matching records. Try changing your filters.</td></tr>';
+let topSkill=skillData[0]?.[0]||"—",topCity=Object.entries(byCity).sort((a,b)=>b[1]-a[1])[0]?.[0]||"—",topRole=roles[0]?.role||"—";$("insights").innerHTML=`<div class="insight"><div class="insighticon">✦</div><div><b>${topSkill} is the leading skill</b><p>It appears most often in the filtered listings.</p></div></div><div class="insight"><div class="insighticon">⌖</div><div><b>${topCity} has the most listings</b><p>Based on the selected dataset and filters.</p></div></div><div class="insight"><div class="insighticon">↗</div><div><b>${topRole} leads role demand</b><p>It has the highest listing count in this view.</p></div></div>`;
+}
+
+/* ===== Interactive layer ===== */
+function drawSalary(data){
+ if(salView==="line"&&data.length){drawLineChart("salaryChart",data);return}
+ if(!data.length){$("salaryChart").innerHTML='<p class="muted" style="padding-top:20px">No data for this selection.</p>';return}
+ $("salaryChart").innerHTML='<div class="bars wide" id="salaryBars" style="padding-top:8px"></div>';
+ svgBars("salaryBars",data.map(d=>[d[0],d[1]]),"linear-gradient(90deg,#4967f5,#8a65e8,#e36db0)",false,null,v=>v.toFixed(1)+" LPA");
+}
+let toastT;function toast(m){let t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("show"),2200)}
+function hasFilters(){return $("roleFilter").value!=="All"||$("cityFilter").value!=="All"||$("expFilter").value!=="All"||$("search").value||skillSel}
+function clearFilters(quiet){$("roleFilter").value="All";$("cityFilter").value="All";$("expFilter").value="All";$("search").value="";skillSel=null;render();if(!quiet)toast("Filters cleared")}
+function csvCell(v){v=String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
+function exportCSV(){
+ let d=filtered();if(!d.length){toast("Nothing to export — no listings match");return}
+ let csv=["role,city,salary,experience,skills"].concat(d.map(r=>[r.role,r.city,r.salary,r.exp,r.skills.join(";")].map(csvCell).join(","))).join("\n");
+ let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="careerpulse_filtered.csv";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),500);
+ toast("Exported "+d.length+" listings");
+}
+function ui(){
+ let st={top:topN,view:salView,dir:salDir,city:cityN};
+ document.querySelectorAll(".seg[data-seg='top'],.seg[data-seg='view'],.seg[data-seg='dir'],.seg[data-seg='city']").forEach(s=>s.querySelectorAll("button").forEach(b=>b.classList.toggle("on",String(st[s.dataset.seg])===b.dataset.v)));
+ let chip=$("skillChip");chip.style.display=skillSel?"inline-flex":"none";chip.textContent=skillSel?"Skill: "+skillSel+" ✕":"";
+ $("clearBtn").style.opacity=hasFilters()?1:.55;
+ document.querySelectorAll("th.sort").forEach(th=>{let on=th.dataset.k===tbl.k;th.querySelector(".arr").textContent=on?(tbl.d>0?"▲":"▼"):""});
+ let ev=$("expFilter").value;document.querySelectorAll("#expLegend div").forEach(x=>{x.classList.toggle("sel",ev===x.dataset.exp);x.classList.toggle("dim",ev!=="All"&&ev!==x.dataset.exp)});
+}
+{const _r=render;render=function(){_r();ui()}}
+
+document.addEventListener("click",e=>{
+ let b=e.target.closest(".seg[data-seg='top'] button,.seg[data-seg='view'] button,.seg[data-seg='dir'] button,.seg[data-seg='city'] button");
+ if(b){let k=b.parentElement.dataset.seg,v=b.dataset.v;if(k==="top")topN=+v;else if(k==="view")salView=v;else if(k==="dir")salDir=v;else if(k==="city")cityN=+v;render();return}
+ let bar=e.target.closest("#skillBars .barrow");
+ if(bar){let n=bar.dataset.name;skillSel=skillSel===n?null:n;render();toast(skillSel?"Filtering by skill: "+n:"Skill filter removed");return}
+ let lg=e.target.closest("#expLegend div");
+ if(lg){let sel=$("expFilter");sel.value=sel.value===lg.dataset.exp?"All":lg.dataset.exp;render();return}
+ let tr=e.target.closest("#roleTable tr[data-role]");
+ if(tr){let sel=$("roleFilter"),r=tr.dataset.role;sel.value=sel.value===r?"All":r;render();toast(sel.value==="All"?"Role filter removed":"Showing "+r+" only");return}
+ let th=e.target.closest("th.sort");
+ if(th){let k=th.dataset.k;if(tbl.k===k)tbl.d*=-1;else{tbl.k=k;tbl.d=["role","skill"].includes(k)?1:-1}render();return}
+});
+$("skillChip").addEventListener("click",()=>{skillSel=null;render();toast("Skill filter removed")});
+$("clearBtn").addEventListener("click",()=>hasFilters()?clearFilters():toast("No filters to clear"));
+$("exportBtn").addEventListener("click",exportCSV);
+
+
+/* ===== Pages ===== */
+const EXPS=["Fresher","1-3 years","4-6 years","7+ years"],EXPC=["#356ae6","#18aaa4","#8065d8","#f0a34d"];
+const avgOf=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:0;
+const medOf=a=>{if(!a.length)return 0;let s=[...a].sort((x,y)=>x-y),m=s.length>>1;return s.length%2?s[m]:(s[m-1]+s[m])/2};
+const modeOf=a=>Object.entries(a.reduce((m,x)=>(m[x]=(m[x]||0)+1,m),{})).sort((x,y)=>y[1]-x[1])[0]?.[0]||"—";
+const GRAD="linear-gradient(90deg,#4967f5,#8a65e8,#e36db0)";
+let sk={sort:"demand",n:10,q:"",sel:null},sal={view:"total",by:"role",metric:"avg",n:5};
+
+function renderSkillsPage(){
+ let d=filtered(),total=d.length,m={};
+ d.forEach(r=>r.skills.forEach(s=>(m[s]??=[]).push(r)));
+ let all=Object.entries(m).map(([name,rs])=>({name,rs,n:rs.length,sal:avgOf(rs.map(r=>r.salary))}));
+ let top=[...all].sort((a,b)=>b.n-a.n)[0],pool=all.filter(s=>s.n>=2),pay=[...(pool.length?pool:all)].sort((a,b)=>b.sal-a.sal)[0];
+ $("sk1").textContent=all.length;$("sk2").textContent=top?top.name:"—";$("sk2s").textContent=top?top.n+" listings · "+Math.round(top.n/total*100)+"% of view":"";
+ $("sk3").textContent=pay?pay.name:"—";$("sk3s").textContent=pay?money(pay.sal)+" average":"";
+ $("sk4").textContent=total?(d.reduce((a,r)=>a+r.skills.length,0)/total).toFixed(1):"0";
+ let q=sk.q.toLowerCase(),list=all.filter(s=>!q||s.name.toLowerCase().includes(q)).sort(sk.sort==="salary"?(a,b)=>b.sal-a.sal||b.n-a.n:(a,b)=>b.n-a.n||b.sal-a.sal);
+ if(!sk.sel||!all.some(s=>s.name===sk.sel))sk.sel=(list[0]||all[0]||{}).name||null;
+ let shown=list.slice(0,sk.n);
+ $("skTable").innerHTML=shown.map((s,i)=>{let p=Math.round(s.n/total*100);return `<tr data-skill="${s.name}" class="${s.name===sk.sel?"sel":""}"><td>${i+1}</td><td class="role">${s.name}</td><td>${s.n}</td><td><span class="minibar"><i style="width:${p}%"></i></span>${p}%</td><td>${money(s.sal)}</td><td>${modeOf(s.rs.map(r=>r.role))}</td></tr>`}).join("")||'<tr><td colspan="6">No skills match. Try changing your filters or search.</td></tr>';
+ let s=all.find(x=>x.name===sk.sel);
+ if(!s){$("skDetail").innerHTML='<div class="cardtitle"><div><h3>Skill profile</h3><p>Pick a skill from the ranking</p></div></div><p class="muted">No skills in the current view.</p>';return}
+ let co={};s.rs.forEach(r=>r.skills.forEach(x=>{if(x!==s.name)co[x]=(co[x]||0)+1}));
+ let pairs=Object.entries(co).sort((a,b)=>b[1]-a[1]).slice(0,6),cnt=k=>Object.entries(s.rs.reduce((o,r)=>(o[r[k]]=(o[r[k]]||0)+1,o),{})).sort((a,b)=>b[1]-a[1]);
+ $("skDetail").innerHTML=`<div class="skhead"><h2>${s.name}</h2><span class="tag">SKILL PROFILE</span></div>
+ <div class="stats3"><div class="stat"><b>${s.n}</b><span>LISTINGS</span></div><div class="stat"><b>${Math.round(s.n/total*100)}%</b><span>OF VIEW</span></div><div class="stat"><b>${money(s.sal)}</b><span>AVG. SALARY</span></div></div>
+ <div class="subh">ROLES THAT ASK FOR IT</div><div class="bars" id="skRoles"></div>
+ <div class="subh">TOP CITIES</div><div class="bars" id="skCities"></div>
+ <div class="subh">OFTEN PAIRED WITH</div><div class="pchips">${pairs.map(([n,c])=>`<button class="pchip" data-skill="${n}" title="${c} shared listings">${n} · ${c}</button>`).join("")||'<span class="muted">No pairings</span>'}</div>
+ <div style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" data-act="skfilter">Filter dashboard by ${s.name}</button></div>`;
+ svgBars("skRoles",cnt("role").slice(0,5),"#356ae6");svgBars("skCities",cnt("city").slice(0,4),"#18aaa4");
+}
+
+function renderSalaryPage(){
+ let d=filtered(),sals=d.map(r=>r.salary);
+ if(!d.length){["sa1","sa2","sa3","sa4"].forEach(i=>$(i).textContent="—");$("sa3s").textContent="";$("sa4s").textContent="";$("salHist").innerHTML='<p class="muted">No listings match the current filters.</p>';$("salLegend").innerHTML="";$("salBars").innerHTML="";$("salTable").innerHTML='<tr><td colspan="5">No matching records. Try changing your filters.</td></tr>';return}
+ let hi=d.reduce((a,b)=>b.salary>a.salary?b:a),lo=d.reduce((a,b)=>b.salary<a.salary?b:a);
+ $("sa1").textContent=money(avgOf(sals));$("sa2").textContent=money(medOf(sals));
+ $("sa3").textContent=money(hi.salary);$("sa3s").textContent=hi.role+" · "+hi.city;$("sa4").textContent=money(lo.salary);$("sa4s").textContent=lo.role+" · "+lo.city;
+ // histogram
+ let a0=Math.floor(Math.min(...sals)/2)*2,b0=Math.ceil((Math.max(...sals)+.01)/2)*2,bk=[];
+ for(let x=a0;x<b0;x+=2)bk.push({a:x,rows:d.filter(r=>r.salary>=x&&r.salary<x+2)});
+ let mx=Math.max(...bk.map(b=>b.rows.length),1);
+ $("salHist").innerHTML='<div class="hist">'+bk.map(b=>{let n=b.rows.length,ec=EXPS.map(e=>b.rows.filter(r=>r.exp===e).length),inner=sal.view==="exp"?ec.map((c,i)=>c?`<div style="flex-grow:${c};background:${EXPC[i]}"></div>`:"").join(""):`<div style="flex-grow:1;background:linear-gradient(0deg,#4967f5,#a064e8)"></div>`,tip=`₹${b.a}–${b.a+2} LPA: ${n} listing${n===1?"":"s"}`+(sal.view==="exp"?" ("+EXPS.map((e,i)=>ec[i]?e+": "+ec[i]:"").filter(Boolean).join(", ")+")":"");return `<div class="hcol" title="${tip}"><div class="hplot"><div class="hstack" style="height:${n/mx*100}%">${inner}</div></div><span class="hn">${n}</span><span class="hl">${b.a}–${b.a+2}</span></div>`}).join("")+'</div>';
+ $("salLegend").innerHTML=sal.view==="exp"?EXPS.map((e,i)=>`<span><span class="dot" style="background:${EXPC[i]}"></span>${e}</span>`).join(""):'<span>Hover a bar for details · x-axis in LPA</span>';
+ // compare
+ let key=sal.by,g={};d.forEach(r=>(g[r[key]]??=[]).push(r.salary));
+ let data=Object.entries(g).map(([k,v])=>[k,sal.metric==="avg"?avgOf(v):medOf(v)]);
+ data.sort(key==="exp"?(x,y)=>EXPS.indexOf(x[0])-EXPS.indexOf(y[0]):(x,y)=>y[1]-x[1]);
+ $("salCmpSub").textContent=(sal.metric==="avg"?"Average":"Median")+" salary by "+(key==="exp"?"experience":key)+" · LPA";
+ svgBars("salBars",data,GRAD,false,null,v=>v.toFixed(1)+" LPA");
+ $("salTable").innerHTML=[...d].sort((a,b)=>b.salary-a.salary).slice(0,sal.n).map(r=>`<tr><td class="role">${r.role}</td><td>${r.city}</td><td>${r.exp}</td><td><b>${money(r.salary)}</b></td><td>${r.skills.slice(0,3).join(", ")}</td></tr>`).join("");
+}
+function syncP(){
+ let st={"sk-sort":sk.sort,"sk-n":sk.n,"s-view":sal.view,"s-by":sal.by,"s-metric":sal.metric,"s-n":sal.n};
+ document.querySelectorAll(".pseg").forEach(s=>s.querySelectorAll("button").forEach(b=>b.classList.toggle("on",String(st[s.dataset.seg])===b.dataset.v)));
+}
+{const _r2=render;render=function(){_r2();renderSkillsPage();renderSalaryPage();syncP()}}
+
+/* ===== Routing (sidebar + mobile tabs) ===== */
+const ROUTES={overview:["overview"],skills:["skills"],salary:["salary"],insights:["insights"],roles:["overview","roles"],freshers:["overview","freshers"]};
+const HEAD={overview:["JOB MARKET INTELLIGENCE","CareerPulse Dashboard","Explore skills, salaries and opportunities across the job market."],skills:["SKILL DEMAND","Skill Explorer","See which skills employers want, what they pay and how they combine."],insights:["AI INSIGHTS","AI Insights","Plain-language takeaways and answers from Claude, based on the data in view."],salary:["SALARY INSIGHTS","Salary Insights","Compare pay across roles, cities and experience levels."]};
+function go(name){
+ if(!ROUTES[name])name="overview";let r=ROUTES[name],pg=r[0];
+ document.querySelectorAll(".page").forEach(p=>p.classList.toggle("on",p.id==="pg-"+pg));
+ document.body.dataset.page=pg;let h=HEAD[pg];$("pgEyebrow").textContent=h[0];$("pgTitle").textContent=h[1];$("pgSub").textContent=h[2];
+ document.querySelectorAll(".nav a").forEach(a=>a.classList.toggle("active",a.getAttribute("href")==="#"+name));
+ document.querySelectorAll("#mobTabs button").forEach(b=>b.classList.toggle("on",b.dataset.go===pg));
+ if(r[1])$(r[1]).scrollIntoView({behavior:"smooth",block:"start"});else window.scrollTo({top:0});
+ try{history.replaceState(null,"","#"+name)}catch(e){}
+}
+document.querySelectorAll(".nav a").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();go(a.getAttribute("href").slice(1))}));
+addEventListener("hashchange",()=>go(location.hash.slice(1)));
+document.addEventListener("click",e=>{
+ let pb=e.target.closest(".pseg button");
+ if(pb){let k=pb.parentElement.dataset.seg,v=pb.dataset.v;
+  if(k==="sk-sort")sk.sort=v;else if(k==="sk-n")sk.n=+v;else if(k==="s-view")sal.view=v;else if(k==="s-by")sal.by=v;else if(k==="s-metric")sal.metric=v;else if(k==="s-n")sal.n=+v;
+  render();return}
+ let g=e.target.closest("#mobTabs [data-go]");if(g){go(g.dataset.go);return}
+ let sd=e.target.closest("#pg-skills [data-skill]");if(sd){sk.sel=sd.dataset.skill;render();return}
+ let act=e.target.closest("[data-act='skfilter']");
+ if(act){skillSel=sk.sel;render();go("overview");toast("Dashboard filtered by "+skillSel)}
+});
+
+
+/* ===== AI insights (Claude) ===== */
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const rich=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/^\s*[-*] /gm,"• ").replace(/\n/g,"<br>");
+const AUD={fresher:"a student or fresher choosing which skills to learn and which roles/cities to target",switcher:"an experienced professional switching roles or domains and weighing pay, skills to add and locations",recruiter:"a recruiter or hiring manager benchmarking salaries, scarce skills and where talent demand is concentrated"};
+let ai={aud:"fresher",busy:false,last:null,sig:"",key:"",chat:[],persist:false};
+const store={get(k){try{return localStorage.getItem(k)||sessionStorage.getItem(k)}catch(e){return null}},set(k,v,persist){try{(persist?localStorage:sessionStorage).setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k);sessionStorage.removeItem(k)}catch(e){}}};
+ai.key=store.get("cp_key")||"";try{ai.persist=!!localStorage.getItem("cp_key")}catch(e){}{let m=store.get("cp_model");if(m)$("aiModel").value=m}
+function filterSig(){return JSON.stringify([$("roleFilter").value,$("cityFilter").value,$("expFilter").value,skillSel,$("search").value,rows.length])}
+function filterText(){let f=[];if($("roleFilter").value!=="All")f.push($("roleFilter").value);if($("cityFilter").value!=="All")f.push($("cityFilter").value);if($("expFilter").value!=="All")f.push($("expFilter").value);if(skillSel)f.push("skill: "+skillSel);if($("search").value)f.push("search: "+$("search").value);return f.length?f.join(" · "):"all listings"}
+function dataSummary(){
+ let d=filtered(),n=d.length,grp=(k)=>{let g={};d.forEach(r=>(g[r[k]]??=[]).push(r));return g},r1=x=>Math.round(x*10)/10;
+ let sk={};d.forEach(r=>r.skills.forEach(s=>(sk[s]??=[]).push(r.salary)));
+ let byRole=Object.entries(grp("role")).map(([role,rs])=>({role,listings:rs.length,avgSalaryLPA:r1(avgOf(rs.map(r=>r.salary))),fresherSharePct:Math.round(rs.filter(r=>r.exp==="Fresher").length/rs.length*100),topSkill:modeOf(rs.flatMap(r=>r.skills))})).sort((a,b)=>b.listings-a.listings);
+ let byCity=Object.entries(grp("city")).map(([city,rs])=>({city,listings:rs.length,avgSalaryLPA:r1(avgOf(rs.map(r=>r.salary)))})).sort((a,b)=>b.listings-a.listings);
+ let byExp=Object.entries(grp("exp")).map(([exp,rs])=>({experience:exp,listings:rs.length,avgSalaryLPA:r1(avgOf(rs.map(r=>r.salary)))}));
+ let topSkills=Object.entries(sk).map(([skill,v])=>({skill,listings:v.length,avgSalaryLPA:r1(avgOf(v))})).sort((a,b)=>b.listings-a.listings).slice(0,15);
+ return {viewFilters:filterText(),listings:n,avgSalaryLPA:r1(avgOf(d.map(r=>r.salary))),medianSalaryLPA:r1(medOf(d.map(r=>r.salary))),fresherSharePct:n?Math.round(d.filter(r=>r.exp==="Fresher").length/n*100):0,topSkills,byRole,byCity,byExperience:byExp,sampleRows:d.slice(0,120).map(r=>[r.role,r.city,r.salary,r.exp,r.skills.join("/")].join("|"))};
+}
+async function llm(system,messages,max){
+ if(!ai.key)throw Error("Add your Anthropic API key in AI settings below first.");
+ let model=($("aiModel").value||"claude-sonnet-5-5").trim(),r;
+ try{r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":ai.key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model,max_tokens:max,system,messages})})}
+ catch(e){throw Error("Couldn’t reach Anthropic. Check your internet connection or network settings.")}
+ if(!r.ok){let t=await r.text(),m;try{m=JSON.parse(t).error.message}catch(e){m=t.slice(0,160)}throw Error(r.status===401?"The API key was rejected. Check it in AI settings.":"API error "+r.status+": "+m)}
+ let j=await r.json();return (j.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("")
+}
+function parseJSON(t){t=t.replace(/```json|```/g,"").trim();let a=t.indexOf("{"),b=t.lastIndexOf("}");if(a<0||b<a)throw Error("bad");return JSON.parse(t.slice(a,b+1))}
+const ICON={trend:"↗",skill:"✦",salary:"₹",city:"⌖",caution:"⚠",role:"▤"};
+function renderIns(o){
+ let ins=(o.insights||[]).map(i=>`<div class="insight"><div class="insighticon">${ICON[i.type]||"✦"}</div><div><b>${esc(i.title)}</b><p>${esc(i.detail)}</p></div></div>`).join("");
+ let rec=(o.recommendations||[]).map(x=>`<li>${esc(x)}</li>`).join(""),wo=(o.watchouts||[]).map(x=>`<li>${esc(x)}</li>`).join("");
+ $("insOut").innerHTML=`<div class="aihead">${esc(o.headline)}</div><div class="insgrid">${ins}</div>${rec?`<div class="subh">RECOMMENDED NEXT STEPS</div><ol class="steps">${rec}</ol>`:""}${wo?`<div class="subh">KEEP IN MIND</div><ul class="steps">${wo}</ul>`:""}`;
+}
+async function genInsights(){
+ if(ai.busy)return;
+ if(!filtered().length){toast("No listings in view — change your filters first");return}
+ if(!ai.key){toast("Add your API key in AI settings first");$("aiSettings").scrollIntoView({behavior:"smooth",block:"center"});return}
+ ai.busy=true;$("insGo").disabled=true;$("insGo").innerHTML='<span class="spin"></span>Generating…';
+ let sig=filterSig();
+ const system="You are a careful career-market analyst inside the CareerPulse dashboard. You only use the dataset summary provided; never invent numbers. The data is a small illustrative sample, so say so when it limits a conclusion. Reply with ONLY a JSON object, no markdown fences.";
+ const user=`Audience: ${AUD[ai.aud]}.\n\nDataset summary (JSON):\n${JSON.stringify(dataSummary())}\n\nReturn JSON exactly in this shape:\n{"headline":"one sentence, max 22 words","insights":[{"type":"trend|skill|salary|city|role|caution","title":"max 8 words","detail":"max 30 words, cite specific numbers from the data"}],"recommendations":["3 or 4 concrete next steps tailored to the audience"],"watchouts":["1 or 2 caveats about the data"]}\nGive 5 or 6 insights.`;
+ try{
+  let txt=await llm(system,[{role:"user",content:user}],1400),o;
+  try{o=parseJSON(txt)}catch(e){$("insOut").innerHTML=`<div class="aihead">Claude’s response</div><p style="font-size:12px;line-height:1.55">${rich(txt)}</p>`;ai.last={headline:"",text:txt};ai.sig=sig;return}
+  renderIns(o);ai.last=o;ai.sig=sig;$("insMeta").textContent="For "+({fresher:"students & freshers",switcher:"job switchers",recruiter:"recruiters"}[ai.aud])+" · "+filterText();
+ }catch(e){$("insOut").innerHTML=`<div class="aiempty"><b>Couldn’t generate insights</b>${esc(e.message)}</div>`}
+ finally{ai.busy=false;$("insGo").disabled=false;$("insGo").textContent=ai.last?"↻ Regenerate":"✦ Generate insights";insUi()}
+}
+function copyIns(){
+ let o=ai.last;if(!o){toast("Nothing to copy yet");return}
+ let t=o.text||[o.headline,"",...(o.insights||[]).map(i=>"- "+i.title+": "+i.detail),"","Next steps:",...(o.recommendations||[]).map((x,i)=>(i+1)+". "+x),"","Keep in mind:",...(o.watchouts||[]).map(x=>"- "+x)].join("\n");
+ (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast("Insights copied"),()=>toast("Couldn’t copy — select the text manually"));
+}
+function addMsg(role,html){let l=$("chatLog"),m=document.createElement("div");m.className="msg "+role;m.innerHTML=html;l.appendChild(m);l.scrollTop=l.scrollHeight;return m}
+async function ask(q){
+ q=(q||$("chatIn").value).trim();if(!q||ai.busy)return;
+ if(!ai.key){toast("Add your API key in AI settings first");$("aiSettings").scrollIntoView({behavior:"smooth",block:"center"});return}
+ if(!filtered().length){toast("No listings in view — change your filters first");return}
+ $("chatIn").value="";addMsg("user",esc(q));ai.chat.push({role:"user",content:q});
+ ai.busy=true;$("chatSend").disabled=true;let w=addMsg("ai",'<span class="spin"></span>Thinking…');
+ const system="You are the CareerPulse data assistant. Answer using ONLY this dataset summary of the listings currently in view; if it can’t answer the question, say so. Be concise (under 120 words), cite numbers, and mention the sample is small/illustrative when it matters. Light **bold** and short '- ' bullets are fine.\n\nDataset summary:\n"+JSON.stringify(dataSummary());
+ try{let a=await llm(system,ai.chat.slice(-8),700);ai.chat.push({role:"assistant",content:a});w.innerHTML=rich(a)}
+ catch(e){ai.chat.pop();w.innerHTML="⚠ "+esc(e.message)}
+ finally{ai.busy=false;$("chatSend").disabled=false;$("chatLog").scrollTop=$("chatLog").scrollHeight}
+}
+function insUi(){
+ let p=$("keyPill");p.textContent=ai.key?"API key set":"API key needed";p.classList.toggle("ok",!!ai.key);
+ $("insStale").style.display=ai.last&&ai.sig!==filterSig()?"block":"none";
+ $("keyStatus").textContent=ai.key?"Key set ("+(ai.persist?"remembered on this device":"this session only")+")":"No key saved";
+ document.querySelectorAll(".iseg button").forEach(b=>b.classList.toggle("on",b.dataset.v===ai.aud));
+}
+{const _r3=render;render=function(){_r3();insUi()}}
+document.addEventListener("click",e=>{
+ let ib=e.target.closest(".iseg button");if(ib){ai.aud=ib.dataset.v;insUi();return}
+ let qc=e.target.closest("[data-q]");if(qc){ask(qc.dataset.q);return}
+});
+$("insGo").addEventListener("click",genInsights);$("insCopy").addEventListener("click",copyIns);
+$("chatSend").addEventListener("click",()=>ask());$("chatIn").addEventListener("keydown",e=>{if(e.key==="Enter")ask()});
+$("chatClear").addEventListener("click",()=>{ai.chat=[];$("chatLog").innerHTML='<div class="msg ai">Chat cleared. Ask me anything about the data in view.</div>'});
+$("keyPill").addEventListener("click",()=>$("aiSettings").scrollIntoView({behavior:"smooth",block:"center"}));
+$("keySave").addEventListener("click",()=>{let k=$("aiKey").value.trim();if(!k){toast("Paste your API key first");return}
+ store.del("cp_key");ai.key=k;ai.persist=$("aiRemember").checked;store.set("cp_key",k,ai.persist);store.set("cp_model",$("aiModel").value.trim(),true);$("aiKey").value="";insUi();toast("API key saved")});
+$("keyClear").addEventListener("click",()=>{store.del("cp_key");ai.key="";$("aiKey").value="";insUi();toast("API key removed")});
+
+/* three-dots menu */
+{const btn=$("moreBtn"),menu=$("moreMenu");
+ const setM=o=>{menu.classList.toggle("open",o);btn.setAttribute("aria-expanded",o)};
+ btn.addEventListener("click",e=>{e.stopPropagation();setM(!menu.classList.contains("open"))});
+ menu.addEventListener("click",()=>setTimeout(()=>setM(false),0));
+ document.addEventListener("click",e=>{if(!e.target.closest(".more"))setM(false)});
+ document.addEventListener("keydown",e=>{if(e.key==="Escape")setM(false)});}
+$("skSearch").addEventListener("input",e=>{sk.q=e.target.value.trim();renderSkillsPage()});
+
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&hasFilters()&&document.activeElement.tagName!=="INPUT")clearFilters()});
+
+["roleFilter","cityFilter","expFilter","search"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",render));
+function resetData(){rows=[...demo];options();$("search").value="";$("roleFilter").value="All";$("cityFilter").value="All";$("expFilter").value="All";render()}
+$("csvFile").addEventListener("change",async e=>{let f=e.target.files[0];if(!f)return;try{let txt=await f.text(),lines=txt.trim().split(/\r?\n/),head=lines.shift().split(",").map(x=>x.trim().toLowerCase().replace(/[^a-z]/g,""));let idx=(...names)=>head.findIndex(h=>names.includes(h));let ri=idx("role","jobrole","jobtitle"),ci=idx("city","location"),si=idx("salary","salarylpa","annualsalary"),ei=idx("experience","experiencelevel"),ki=idx("skills","requiredskills");if([ri,ci,si,ki].some(x=>x<0))throw Error("CSV needs columns for role, city, salary, and skills. Optional: experience.");let parsed=lines.map(line=>{let c=line.split(",").map(x=>x.trim().replace(/^"|"$/g,""));return {role:c[ri],city:c[ci],salary:parseFloat(c[si].replace(/[₹,]/g,"")),exp:ei<0?"1-3 years":(c[ei]||"1-3 years"),skills:(c[ki]||"").split(/[;|]/).map(x=>x.trim()).filter(Boolean)}}).filter(x=>x.role&&x.city&&Number.isFinite(x.salary));if(!parsed.length)throw Error("No valid rows found. Check your CSV values.");rows=parsed;options();$("roleFilter").value="All";$("cityFilter").value="All";$("expFilter").value="All";render();alert("Dataset loaded: "+rows.length+" records.")}catch(err){alert(err.message)}e.target.value=""});
+options();render();go(location.hash.slice(1)||"overview");
+</script></body></html>
